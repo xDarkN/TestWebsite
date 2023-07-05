@@ -3,6 +3,43 @@
 <head>
   <title>About</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      background-image: url("/static/uploads/background.jpeg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh; /* Add this line to cover the entire page */
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh; /* To ensure the container takes up the full viewport height */
+    }
+
+    .about-content {
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .about-heading {
+      color: #999;
+      margin-bottom: 20px;
+    }
+
+    .about-image img {
+      width: 100%;
+      max-width: 500px; /* Optional: To set a maximum width for the image */
+      border-radius: 15px;
+      margin-top: -2000px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -14,8 +51,8 @@
     </div>
     <div class="about-image">
       <a href="https://www.youtube.com/watch?v=yPP5bD8xVhg">
-  <img src="{{ url_for('static', filename='about.jpg') }}" alt="About Image">
-</a>
+        <img src="{{ url_for('static', filename='about.jpg') }}" alt="About Image">
+      </a>
     </div>
   </div>
 </body>

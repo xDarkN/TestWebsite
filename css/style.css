@@ -30,6 +30,12 @@ body {
   line-height: 1.80857;
   font-weight: normal;
   overflow-x: hidden;
+  background-color: #f4f4f4;
+  background-image: url("/static/uploads/background.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
 }
 
 a {
@@ -55,7 +61,7 @@ h6 {
     padding: 0 0 10px 0;
     font-weight: normal;
     line-height: normal;
-    color: #111111;
+    color: #999;
     margin: 0
 }
 

@@ -3,70 +3,103 @@
 <head>
   <title>Welcome to My Test Website</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-<style>
-  /* Additional CSS styles */
+  <style>
+    /* Additional CSS styles */
 
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    background-image: url("/static/uploads/background.jpeg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-  }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      background-image: url("/static/uploads/background.jpeg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      margin: 0;
+      padding: 0;
+    }
 
-  .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    height: 100vh;
-  }
+    .navbar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.5); /* Transparent background */
+      color: #fff;
+      padding: 10px;
+      display: flex;
+      justify-content: flex-end;
+      z-index: 100; /* Ensures the navbar is above other elements */
+      transition: font-size 0.3s ease;
+    }
 
-  h1 {
-    color: #999;
-    text-align: center;
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    height: 0vh;
-  }
+    .navbar a {
+      color: #fff;
+      text-decoration: none;
+      margin-right: 10px;
+      font-size: 18px;
+    }
 
-  p {
-    color: #999;
-    font-size: 18px;
-    line-height: 1.5;
-  }
+    .navbar a:hover {
+      font-size: 20px; /* Increase font size on hover */
+    }
 
-  .button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: calc(100vh - 50px); /* Subtract the navbar height from the full viewport height */
+      margin-top: 50px; /* Add margin to push content below the navbar */
+    }
 
-  .button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    margin-right: 10px;
-  }
+    h1 {
+      color: #999;
+      text-align: center;
+      margin-bottom: 30px;
+    }
 
-  .button:hover {
-    background-color: #0056b3;
-  }
+    p {
+      color: #999;
+      font-size: 18px;
+      line-height: 1.5;
+      text-align: center;
+    }
 
-  #dynamic-content {
-    font-size: 20px;
-    color: #999; /* Same color as h1 */
-    text-align: center;
-    margin-top: 30px;
-  }
-</style>
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+      margin-right: 10px;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
+    }
+
+    #dynamic-content {
+      font-size: 20px;
+      color: #999; /* Same color as h1 */
+      text-align: center;
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
+  <div class="navbar">
+    <a href="/home">Home</a>
+    <a href="/about">About</a>
+    <a href="/login">Login</a>
+    <a href="/register">Register</a>
+  </div>
+
   <div class="container">
     <h1>Welcome to My Test Website</h1>
     <p>This is a simple and nice index page for your test website.</p>
