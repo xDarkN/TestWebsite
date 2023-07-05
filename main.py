@@ -2,13 +2,12 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 from datetime import timedelta
 from pymongo import MongoClient
 from werkzeug.utils import secure_filename
-import os
-import time
+import os ; import time
 
 client = MongoClient('mongodb://localhost:27017/')  # Connect to MongoDB
 db = client['Website_db']  # Select the database
 
-UPLOAD_FOLDER = 'C:\\Users\\nadav\\PycharmProjects\\TestWebsite\\static\\uploads\\'
+UPLOAD_FOLDER = 'C:\\Users\\nadav\\OneDrive\\Desktop\\DevOps22\\GIT\\TestWebsite\\static\\uploads\\'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # Specify the allowed file extensions
 
 app = Flask(__name__)
@@ -40,7 +39,7 @@ def login():
             # User is authenticated, set session variables
             session['username'] = username
             session.permanent = True
-            app.permanent_session_lifetime = timedelta(seconds=15)
+            app.permanent_session_lifetime = timedelta(seconds=60)
 
             # Flash a success message
             flash('Login successful. Redirecting to your account page...', 'success')

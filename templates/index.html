@@ -2,62 +2,69 @@
 <html>
 <head>
   <title>Welcome to My Test Website</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename=css_file) }}">
-  <style>
-    /* Additional CSS styles */
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<style>
+  /* Additional CSS styles */
 
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-    }
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    background-image: url("/static/uploads/background.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
 
-    .container {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      height: 100vh;
-    }
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+  }
 
-    h1 {
-      color: #333;
-      text-align: center;
-      margin-bottom: 30px;
-    }
+  h1 {
+    color: #999;
+    text-align: center;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    height: 0vh;
+  }
 
-    p {
-      color: #666;
-      font-size: 18px;
-      line-height: 1.5;
-    }
+  p {
+    color: #999;
+    font-size: 18px;
+    line-height: 1.5;
+  }
 
-    .button-container {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-    }
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
 
-    .button {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-      margin-right: 10px;
-    }
+  .button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+  }
 
-    .button:hover {
-      background-color: #0056b3;
-    }
+  .button:hover {
+    background-color: #0056b3;
+  }
 
-    #dynamic-content {
-      font-size: 20px;
-      color: #333;
-      text-align: center;
-      margin-top: 30px;
-    }
-  </style>
+  #dynamic-content {
+    font-size: 20px;
+    color: #999; /* Same color as h1 */
+    text-align: center;
+    margin-top: 30px;
+  }
+</style>
 </head>
 <body>
   <div class="container">
@@ -68,7 +75,7 @@
       <a class="button" href="/login">Login</a>
       <a class="button" href="/register">Register</a>
     </div>
-</a>
+    <div id="dynamic-content"></div>
   </div>
 
   <script>
