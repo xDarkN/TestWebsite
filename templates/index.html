@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to My Test Website</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename=css_file) }}">
+  <style>
+    /* Additional CSS styles */
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      height: 100vh;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    p {
+      color: #666;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+      margin-right: 10px;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
+    }
+
+    #dynamic-content {
+      font-size: 20px;
+      color: #333;
+      text-align: center;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to My Test Website</h1>
+    <p>This is a simple and nice index page for your test website.</p>
+    <div class="button-container">
+      <a class="button" href="/about">Get Started</a>
+      <a class="button" href="/login">Login</a>
+      <a class="button" href="/register">Register</a>
+    </div>
+</a>
+  </div>
+
+  <script>
+    // Get the dynamic content element
+    var dynamicContent = document.getElementById("dynamic-content");
+
+    // Set the dynamic content value to "Hello Nadav!"
+    dynamicContent.textContent = "Hello Nadav!";
+  </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Successful</title>
+</head>
+<body>
+  <h1>Welcome, {{ username }}!</h1>
+  <p>You will be redirected to your account page in {{ delay }} seconds.</p>
+  <img src="{{ url_for('static', filename='login_success_icon.png') }}" alt="Logo" class="register-logo">
+  <script>
+    setTimeout(function() {
+      window.location.href = '/my_account';
+    }, {{ delay }} * 1000);
+  </script>
+</body>
+</html>

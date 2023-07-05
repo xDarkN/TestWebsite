@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Successful</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="success-container">
+    <img src="{{ url_for('static', filename='register_success_icon.png') }}" alt="Success" class="success-icon">
+    <h1>Registration Successful</h1>
+    <p>Congratulations, you have successfully registered!</p>
+    <a href="/login">Login Now</a>
+  </div>
+</body>
+</html>

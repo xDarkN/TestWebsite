@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Account</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <style>
+    .profile-picture {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .profile-picture img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome, {{ username }}!</h1>
+
+  {% if profile_picture %}
+  <div class="profile-picture">
+    <img src="{{ url_for('static', filename='uploads/' + profile_picture) }}" alt="Profile Picture">
+  </div>
+  {% endif %}
+
+  <br><br> <!-- Add space between sections -->
+
+  <form action="{{ url_for('my_account') }}" method="POST" enctype="multipart/form-data">
+    <label for="nickname">Nickname:</label>
+    <input type="text" id="nickname" name="nickname" value="{{ nickname }}"><br><br>
+
+    <label for="last_name">Last Name:</label>
+    <input type="text" id="last_name" name="last_name" value="{{ last_name }}"><br><br>
+
+    <label for="profile_picture">Profile Picture:</label>
+    <input type="file" id="profile_picture" name="profile_picture"><br><br>
+
+    <input type="submit" value="Save Changes">
+  </form>
+
+  <br><br> <!-- Add space between sections -->
+  <script>
+    setTimeout(function() {
+      window.location.href = '/my_account';
+    }, {{ delay }} * 2000);
+  </script>
+</body>
+</html>
