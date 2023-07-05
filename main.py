@@ -39,7 +39,7 @@ def login():
             # User is authenticated, set session variables
             session['username'] = username
             session.permanent = True
-            app.permanent_session_lifetime = timedelta(seconds=60)
+            app.permanent_session_lifetime = timedelta(seconds=300)
 
             # Flash a success message
             flash('Login successful. Redirecting to your account page...', 'success')
@@ -69,7 +69,7 @@ def my_account():
         return redirect('/login')
 
     # Update the session TTL to 45 seconds from the current time
-    session['ttl'] = time.time() + 60
+    session['ttl'] = time.time() + 300
 
     # Get the user's current information from the database
     collection = db['users']
@@ -133,6 +133,47 @@ def register():
     # Render the registration page template
     return render_template('register.html', css_file='styles.css')
 
+
+@app.route('/tasks', methods=['GET', 'POST'])
+def tasks():
+    if 'username' not in session:
+        return redirect('/login')
+
+    # Check if the session has expired
+    if 'ttl' in session and time.time() > session['ttl']:
+        session.clear()
+        flash('Session expired. Please log in again.', 'info')
+        return redirect('/login')
+
+    # Update the session TTL to 45 seconds from the current time
+    session['ttl'] = time.time() + 300
+
+    if request.method == 'POST':
+        # Get the submitted task details
+        task_name = request.form['task_name']
+        task_priority = request.form['task_priority']
+        task_deadline = request.form['task_deadline']
+
+        # Connect to the 'tasks' collection in MongoDB
+        collection = db['tasks']
+
+        # Insert the task into the collection
+        collection.insert_one({
+            'username': session['username'],
+            'task_name': task_name,
+            'task_priority': task_priority,
+            'task_deadline': task_deadline
+        })
+
+        flash('Task added successfully.', 'success')
+        return redirect(url_for('tasks'))
+
+    # Get the tasks for the current user from the database
+    collection = db['tasks']
+    tasks = collection.find({'username': session['username']})
+
+    # Render the tasks page template
+    return render_template('tasks.html', tasks=tasks, css_file='styles.css')
 
 if __name__ == '__main__':
     app.run(debug=True)
