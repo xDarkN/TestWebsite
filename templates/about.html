@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>About</title>
+  {% include 'navbar.html' %}
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   <style>
     body {
@@ -51,7 +52,7 @@
     </div>
     <div class="about-image">
       <a href="https://www.youtube.com/watch?v=yPP5bD8xVhg">
-        <img src="{{ url_for('static', filename='about.jpg') }}" alt="About Image">
+        <img src="{{ url_for('static', filename='WebPictures/about.jpg') }}" alt="About Image">
       </a>
     </div>
   </div>

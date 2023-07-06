@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 from datetime import timedelta
 from pymongo import MongoClient
 from werkzeug.utils import secure_filename
-import os ; import time
+import os
+import time
 
 client = MongoClient('mongodb://localhost:27017/')  # Connect to MongoDB
 db = client['Website_db']  # Select the database
@@ -53,9 +54,44 @@ def login():
     # Render the login page template
     return render_template('login.html', css_file='styles.css')
 
+@app.route('/tasks', methods=['GET', 'POST'])
+def tasks():
+    if request.method == 'POST':
+        # Get the task details from the form
+        task_name = request.form['task_name']
+        task_priority = request.form['task_priority']
+        task_subtasks = request.form.getlist('task_subtasks')
+
+        # Connect to the 'tasks' collection in MongoDB
+        collection = db['tasks']
+
+        # Create a new task document
+        task = {
+            'user_id': session['username'],
+            'task_name': task_name,
+            'task_priority': task_priority,
+            'task_subtasks': task_subtasks
+        }
+
+        # Insert the new task into the collection
+        collection.insert_one(task)
+
+        # Flash a success message
+        flash('Task added successfully.', 'success')
+
+    # Get the tasks for the current user from the database
+    collection = db['tasks']
+    tasks = collection.find({'user_id': session['username']})
+
+    return render_template('tasks.html', css_file='main.css', tasks=tasks, delay=2.5)
+
 @app.route('/login_success')
 def login_success():
     return render_template('login_success.html', css_file='styles.css', delay=2.5)
+
+# Rest of the code...
+
+
 
 @app.route('/my_account', methods=['GET', 'POST'])
 def my_account():
@@ -107,7 +143,6 @@ def my_account():
                            nickname=user.get('nickname', ''), last_name=user.get('last_name', ''),
                            profile_picture=user.get('profile_picture', ''))
 
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -132,48 +167,6 @@ def register():
 
     # Render the registration page template
     return render_template('register.html', css_file='styles.css')
-
-
-@app.route('/tasks', methods=['GET', 'POST'])
-def tasks():
-    if 'username' not in session:
-        return redirect('/login')
-
-    # Check if the session has expired
-    if 'ttl' in session and time.time() > session['ttl']:
-        session.clear()
-        flash('Session expired. Please log in again.', 'info')
-        return redirect('/login')
-
-    # Update the session TTL to 45 seconds from the current time
-    session['ttl'] = time.time() + 300
-
-    if request.method == 'POST':
-        # Get the submitted task details
-        task_name = request.form['task_name']
-        task_priority = request.form['task_priority']
-        task_deadline = request.form['task_deadline']
-
-        # Connect to the 'tasks' collection in MongoDB
-        collection = db['tasks']
-
-        # Insert the task into the collection
-        collection.insert_one({
-            'username': session['username'],
-            'task_name': task_name,
-            'task_priority': task_priority,
-            'task_deadline': task_deadline
-        })
-
-        flash('Task added successfully.', 'success')
-        return redirect(url_for('tasks'))
-
-    # Get the tasks for the current user from the database
-    collection = db['tasks']
-    tasks = collection.find({'username': session['username']})
-
-    # Render the tasks page template
-    return render_template('tasks.html', tasks=tasks, css_file='styles.css')
 
 if __name__ == '__main__':
     app.run(debug=True)
