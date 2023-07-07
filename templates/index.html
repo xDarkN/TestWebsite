@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>Welcome to My Test Website</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   <style>
     /* Additional CSS styles */
     body {
@@ -15,92 +14,11 @@
       margin: 0;
       padding: 0;
     }
-
-    .navbar {
-      position: fixed;
-      top: 0;
-      right: 0;
-      left: 0;
-      background-color: rgba(0, 0, 0, 0.5); /* Transparent background */
-      color: #fff;
-      padding: 10px;
-      display: flex;
-      justify-content: space-between; /* Adjusted to create space between title and other links */
-      align-items: center;
-      z-index: 100; /* Ensures the navbar is above other elements */
-      transition: font-size 0.3s ease;
-    }
-
-    .navbar a {
-      color: #fff;
-      text-decoration: none;
-      margin-right: 10px;
-      font-size: 18px;
-    }
-
-    .navbar a:hover {
-      font-size: 20px; /* Increase font size on hover */
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: calc(100vh - 50px); /* Subtract the navbar height from the full viewport height */
-      margin-top: 50px; /* Add margin to push content below the navbar */
-    }
-
-    h1 {
-      color: #999;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    p {
-      color: #999;
-      font-size: 18px;
-      line-height: 1.5;
-      text-align: center;
-    }
-
-    .button-container {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-    }
-
-    .button {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-      margin-right: 10px;
-    }
-
-    .button:hover {
-      background-color: #0056b3;
-    }
-
-    #dynamic-content {
-      font-size: 20px;
-      color: #999; /* Same color as h1 */
-      text-align: center;
-      margin-top: 30px;
-    }
   </style>
+  {% include 'navbar.html' %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
-  <div class="navbar">
-    <a href="/home">Home</a>
-    <a style="margin: 0;">Tasks</a>
-    <a href="/about">About</a>
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
-  </div>
-
   <div class="container">
     <h1>Welcome to My Test Website</h1>
     <p>This is a simple and nice index page for your test website.</p>

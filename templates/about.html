@@ -2,8 +2,7 @@
 <html>
 <head>
   <title>About</title>
-  {% include 'navbar.html' %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -38,11 +37,11 @@
       width: 100%;
       max-width: 500px; /* Optional: To set a maximum width for the image */
       border-radius: 15px;
-      margin-top: -2000px;
     }
   </style>
 </head>
 <body>
+  {% include 'navbar.html' %}
   <div class="container">
     <div class="about-content">
       <h1 class="about-heading">About Us</h1>

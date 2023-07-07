@@ -18,11 +18,13 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER  # Set the upload folder configurati
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('index.html', css_file='styles.css')
+    if 'username' in session:
+        return redirect(url_for('tasks'))
+    return render_template('index.html', css_file='css/main.css')
 
 @app.route('/about')
 def about():
-    return render_template('about.html', css_file='styles.css')
+    return render_template('about.html', css_file='css/main.css')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -52,10 +54,12 @@ def login():
         flash('Invalid username or password. Please try again.', 'error')
 
     # Render the login page template
-    return render_template('login.html', css_file='styles.css')
+    return render_template('login.html', css_file='css/main.css')
 
 @app.route('/tasks', methods=['GET', 'POST'])
 def tasks():
+    if 'username' not in session:
+        return render_template('login_required.html', css_file='css/main.css')
     if request.method == 'POST':
         # Get the task details from the form
         task_name = request.form['task_name']
@@ -87,11 +91,13 @@ def tasks():
 
 @app.route('/login_success')
 def login_success():
-    return render_template('login_success.html', css_file='styles.css', delay=2.5)
+    return render_template('login_success.html', css_file='css/main.css', delay=2.5)
 
-# Rest of the code...
-
-
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('You have been logged out.', 'info')
+    return redirect(url_for('home'))
 
 @app.route('/my_account', methods=['GET', 'POST'])
 def my_account():
@@ -157,7 +163,7 @@ def register():
         existing_user = collection.find_one({'username': username})
         if existing_user:
             # User already exists, show an error message
-            return render_template('register.html', css_file='styles.css', error='Username already taken')
+            return render_template('register.html', css_file='css/main.css', error='Username already taken')
 
         # Insert the new user into the collection
         collection.insert_one({'username': username, 'password': password})
@@ -166,7 +172,7 @@ def register():
         return render_template('register_success.html', username=username)
 
     # Render the registration page template
-    return render_template('register.html', css_file='styles.css')
+    return render_template('register.html', css_file='css/main.css')
 
 if __name__ == '__main__':
     app.run(debug=True)

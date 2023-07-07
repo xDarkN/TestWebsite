@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>Login</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -70,10 +69,12 @@
       color: #007bff;
       text-decoration: none;
     }
+
   </style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  {% include 'navbar.html' %}
 </head>
 <body>
-  {% include 'navbar.html' %}
   <div class="login-container">
     <img src="{{ url_for('static', filename='WebPictures/login_logo.png') }}" alt="Logo" class="login-logo">
     <h1>Login</h1>

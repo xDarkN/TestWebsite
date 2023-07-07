@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Required</title>
+    {% include 'navbar.html' %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      background-image: url("/static/uploads/background.jpeg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    h1 {
+      color: #999;
+      margin-bottom: 30px;
+    }
+
+    p {
+      color: #999;
+      font-size: 18px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Login Required</h1>
+    <p>You need to be logged in to access this page!</p>
+    <p><a href="/login">Click here to log in</a></p>
+  </div>
+</body>
+</html>
