@@ -292,6 +292,9 @@ function updateDisplay(){
                 <div class="type ${divTextColor}">
                     <p>${element.category}</p>
                 </div>
+                    <div class="event-content ${divMarginColor}">
+                    <img src="/static/assets/delete.png" class="delete-task m-${dayButtonSelected}">
+                </div>
                 <div class="event-content ${divMarginColor}">
                     <img src="/static/assets/menu-card.png" class="menu-card m-${dayButtonSelected}">
                     <h3>${element.name}</h3>
