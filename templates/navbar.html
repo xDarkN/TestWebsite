@@ -1,0 +1,16 @@
+<div class="navbar">
+  <a href="/home">Home</a>
+  {% if 'username' in session %}
+    <a href="/tasks">Tasks</a>
+  {% else %}
+    <a style="margin: 0; pointer-events: none; opacity: 0.5;">Tasks</a>
+  {% endif %}
+  <a href="/about">About</a>
+  {% if 'username' in session %}
+    <a href="/my_account">My Account</a>
+    <a href="/logout">Logout</a>
+  {% else %}
+    <a href="/login">Login</a>
+    <a href="/register">Register</a>
+  {% endif %}
+</div>

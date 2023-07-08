@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to My Test Website</title>
+  <style>
+    /* Additional CSS styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      background-image: url("/static/uploads/background.jpeg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  {% include 'navbar.html' %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to My Test Website</h1>
+    <p>This is a simple and nice index page for your test website.</p>
+    <div class="button-container">
+      <a class="button" href="/about">Get Started</a>
+      <a class="button" href="/login">Login</a>
+      <a class="button" href="/register">Register</a>
+    </div>
+    <div id="dynamic-content"></div>
+  </div>
+
+  <script>
+    // Get the dynamic content element
+    var dynamicContent = document.getElementById("dynamic-content");
+
+    // Set the dynamic content value to "Hello Nadav!"
+    dynamicContent.textContent = "Hello Nadav!";
+  </script>
+</body>
+</html>

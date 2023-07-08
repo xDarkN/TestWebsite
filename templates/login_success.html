@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Successful</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      background-image: url("/static/uploads/background.jpeg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      color: #999;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    p {
+      color: #999;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .register-logo {
+      display: block;
+      margin: 0 auto;
+      width: 150px;
+      height: 150px;
+    }
+  </style>
+    {% include 'navbar.html' %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+  <h1>Welcome, {{ username }}!</h1>
+  <p>You will be redirected to your account page in {{ delay }} seconds.</p>
+  <img src="{{ url_for('static', filename='WebPictures/login_success_icon.png') }}" alt="Logo" class="register-logo">
+  <script>
+    setTimeout(function() {
+      window.location.href = '/my_account';
+    }, {{ delay }} * 1000);
+  </script>
+</body>
+</html>
