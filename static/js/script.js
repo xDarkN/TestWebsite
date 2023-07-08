@@ -553,4 +553,8 @@ $('#datepicker').datepicker({
 
 
 deleteTaskPastDays();
+<<<<<<< HEAD
 updateDisplay();
+=======
+updateDisplay();
+>>>>>>> origin/main

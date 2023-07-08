@@ -5,10 +5,17 @@ from werkzeug.utils import secure_filename
 import os
 import time
 
+<<<<<<< HEAD
 client = MongoClient('mongodb://db:27017/')
 db = client['Website_db']  # Select the database
 
 UPLOAD_FOLDER = '/app/static/uploads/'
+=======
+client = MongoClient('mongodb://localhost:27017/')  # Connect to MongoDB
+db = client['Website_db']  # Select the database
+
+UPLOAD_FOLDER = 'C:\\Users\\nadav\\OneDrive\\Desktop\\DevOps22\\GIT\\TestWebsite\\static\\uploads\\'
+>>>>>>> origin/main
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # Specify the allowed file extensions
 
 app = Flask(__name__)
@@ -175,4 +182,8 @@ def register():
     return render_template('register.html', css_file='css/main.css')
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     app.run(debug=True,host="0.0.0.0")
+=======
+    app.run(debug=True)
+>>>>>>> origin/main
