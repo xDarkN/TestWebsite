@@ -1,33 +1,57 @@
-from flask import Flask, render_template, request, session, redirect, url_for, flash
+from flask import Flask, render_template, request, session, redirect, url_for, flash, jsonify
 from datetime import timedelta
 from pymongo import MongoClient
 from werkzeug.utils import secure_filename
 import os
 import time
 
-<<<<<<< HEAD
-client = MongoClient('mongodb://db:27017/')
-db = client['Website_db']  # Select the database
+app = Flask(__name__)
+app.secret_key = os.urandom(24)  # Generate a secure secret key
 
-UPLOAD_FOLDER = '/app/static/uploads/'
-=======
 client = MongoClient('mongodb://localhost:27017/')  # Connect to MongoDB
 db = client['Website_db']  # Select the database
 
 UPLOAD_FOLDER = 'C:\\Users\\nadav\\OneDrive\\Desktop\\DevOps22\\GIT\\TestWebsite\\static\\uploads\\'
->>>>>>> origin/main
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # Specify the allowed file extensions
 
-app = Flask(__name__)
-app.secret_key = os.urandom(24)  # Generate a secure secret key
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER  # Set the upload folder configuration
+
+class Task:
+    def __init__(self, name, date, stime, ftime, category, comment=""):
+        self.comment = comment
+        self.category = category
+        self.startTime = stime
+        self.finishTime = ftime
+        self.date = date
+        self.name = name
+
+def SaveTask(task):
+    # Save the task to the jQuery database
+    # Your existing code here...
+
+    # Save the task to MongoDB
+    collection = db['tasks']
+    collection.insert_one({
+        'name': task.name,
+        'date': task.date,
+        'startTime': task.startTime,
+        'finishTime': task.finishTime,
+        'category': task.category,
+        'comment': task.comment
+    })
 
 @app.route("/")
 @app.route("/home")
 def home():
     if 'username' in session:
         return redirect(url_for('tasks'))
+
+    # Retrieve tasks from MongoDB
+    collection = db['tasks']
+    tasks = list(collection.find())
+
     return render_template('index.html', css_file='css/main.css')
+
 
 @app.route('/about')
 def about():
@@ -67,34 +91,7 @@ def login():
 def tasks():
     if 'username' not in session:
         return render_template('login_required.html', css_file='css/main.css')
-    if request.method == 'POST':
-        # Get the task details from the form
-        task_name = request.form['task_name']
-        task_priority = request.form['task_priority']
-        task_subtasks = request.form.getlist('task_subtasks')
-
-        # Connect to the 'tasks' collection in MongoDB
-        collection = db['tasks']
-
-        # Create a new task document
-        task = {
-            'user_id': session['username'],
-            'task_name': task_name,
-            'task_priority': task_priority,
-            'task_subtasks': task_subtasks
-        }
-
-        # Insert the new task into the collection
-        collection.insert_one(task)
-
-        # Flash a success message
-        flash('Task added successfully.', 'success')
-
-    # Get the tasks for the current user from the database
-    collection = db['tasks']
-    tasks = collection.find({'user_id': session['username']})
-
-    return render_template('tasks.html', css_file='main.css', tasks=tasks, delay=2.5)
+    return render_template('tasks.html', css_file='main.css', delay=2.5)
 
 @app.route('/login_success')
 def login_success():
@@ -181,9 +178,20 @@ def register():
     # Render the registration page template
     return render_template('register.html', css_file='css/main.css')
 
+
+@app.route('/save_task', methods=['POST'])
+def save_task():
+    task_data = request.get_json()
+    new_task = Task(
+        task_data['name'],
+        task_data['date'],
+        task_data['startTime'],
+        task_data['finishTime'],
+        task_data['category'],
+        task_data['comment']
+    )
+    SaveTask(new_task)
+    return jsonify({'message': 'Task saved successfully'})
+
 if __name__ == '__main__':
-<<<<<<< HEAD
-    app.run(debug=True,host="0.0.0.0")
-=======
-    app.run(debug=True)
->>>>>>> origin/main
+    app.run(debug=True, host="0.0.0.0")
