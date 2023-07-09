@@ -26,7 +26,7 @@
             <div class="tasks" id="tasks">
             </div>
             <div class="event-card" data-task-id="task_id_here">
-                <button class="delete-task" onclick="deleteTask(this)">
+                <button class="delete-task" onclick="deleteTask('${task._id.toHexString()}')"></button>
                 </button>
   <!-- Rest of the event card content -->
                 <div class="menu-card"></div>

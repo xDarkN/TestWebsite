@@ -350,58 +350,88 @@ function saveAnimation(){
  * @param task - the task object
  */
 
-function SaveTask(task){
-    var taskArray = [];
-    taskArray = JSON.parse(localStorage.getItem('tasks'));
-    taskArray.push(task);
-    localStorage.setItem('tasks', JSON.stringify(taskArray));
-    saveAnimation();
+
+function saveTaskToDatabase(task) {
+  $.ajax({
+    url: "/save_task",
+    type: "POST",
+    data: JSON.stringify(task),
+    contentType: "application/json",
+    success: function (response) {
+      console.log("Task saved successfully!");
+
+      // Update the UI
+      var taskArray = [];
+      taskArray = JSON.parse(localStorage.getItem("tasks"));
+      taskArray.push(task);
+      localStorage.setItem("tasks", JSON.stringify(taskArray));
+
+      saveAnimation();
+      updateDisplay(); // Update the UI display
+    },
+    error: function (error) {
+      console.error("Error saving task:", error);
+    },
+  });
 }
-/* Creating a new task object and saving it to local storage. */
 
 form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    var data = new FormData(form);
+  var data = new FormData(form);
 
-    var taskName = data.get("task-name");
-    var taskDate = data.get("datepicker");
-    var taskStartTime = data.get("task-start-time");
-    var taskFinishTime = data.get("task-finish-time");
-    var taskInfo = data.get("task-info");
-    var taskCategory = data.get("category");
+  var taskName = data.get("task-name");
+  var taskDate = data.get("datepicker");
+  var taskStartTime = data.get("task-start-time");
+  var taskFinishTime = data.get("task-finish-time");
+  var taskInfo = data.get("task-info");
+  var taskCategory = data.get("category");
 
-    if(taskName == "" || taskDate == "" || taskStartTime == ""
-    || taskFinishTime == "" || taskCategory == ""){
+  if (
+    taskName == "" ||
+    taskDate == "" ||
+    taskStartTime == "" ||
+    taskFinishTime == "" ||
+    taskCategory == ""
+  ) {
+    const error = document.getElementById("error");
+    error.classList.add("error");
+    error.innerHTML = "There are fields that you still have to fill out";
+  } else {
+    error.classList.remove("error");
+    error.innerHTML = "";
 
-        const error = document.getElementById("error");
-        error.classList.add("error");
-        error.innerHTML = "There are fields that you still have to fill out";
-
-    }else{
-
-        error.classList.remove("error");
-        error.innerHTML = "";
-
-        class Task {
-            constructor(name, date, stime, ftime, category, comment = "") {
-                this.comment = comment;
-                this.category = category;
-                this.startTime = stime;
-                this.finishTime = ftime;
-                this.date = date;
-                this.name = name;
-            }
-        }
-
-        var newTask = new Task(taskName,taskDate,taskStartTime,taskFinishTime,taskCategory,taskInfo);
-
-        form.reset();
-        SaveTask(newTask);
-
+    class Task {
+      constructor(
+        name,
+        date,
+        stime,
+        ftime,
+        category,
+        comment = ""
+      ) {
+        this.comment = comment;
+        this.category = category;
+        this.startTime = stime;
+        this.finishTime = ftime;
+        this.date = date;
+        this.name = name;
+      }
     }
 
-},false)
+    var newTask = new Task(
+      taskName,
+      taskDate,
+      taskStartTime,
+      taskFinishTime,
+      taskCategory,
+      taskInfo
+    );
+
+    form.reset();
+    saveTaskToDatabase(newTask);
+  }
+});
 
 
 
