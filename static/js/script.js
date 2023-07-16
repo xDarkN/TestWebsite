@@ -244,7 +244,7 @@ function changeDisplay(){
 **/
 
 function updateDisplay(){
-
+console.log("updateDisplay");
     let updatedTasks = [];
     updatedTasks = JSON.parse(localStorage.getItem('tasks'));
     let dayButtonSelected = parseInt(document.getElementsByClassName("date-selected")[0].id);
@@ -326,6 +326,26 @@ function updateDisplay(){
 
 }
 
+
+function clearTasks() {
+    console.log("clear_tasks");
+    fetch('/clear_tasks', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.message);
+        updateDisplay(); // Update the UI after clearing tasks
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
 /**
  * When the save button is clicked, the form is blurred and the task-saved div is displayed. After one
  * second, the blur is removed and the task-saved div is hidden.
@@ -349,6 +369,33 @@ function saveAnimation(){
  * into the array, and then stringifies the array and saves it back into localStorage.
  * @param task - the task object
  */
+
+
+   function deleteTask(taskId) {
+    console.log("Task ID:", taskId); // Add this line to check the received taskId
+
+    fetch('/delete_task', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            taskId: taskId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.message);
+        // Handle the response and perform any necessary actions
+        // For example, you can remove the deleted task from the UI
+        // using JavaScript DOM manipulation.
+        updateDisplay(); // Call the updateDisplay() function to update the UI
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
 
 
 function saveTaskToDatabase(task) {
@@ -434,29 +481,6 @@ form.addEventListener("submit", (e) => {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /** Code creates a new time div taking into account the start time */
 
 var inputStartTime = document.getElementById("task-start-time");
@@ -500,40 +524,12 @@ inputStartTime.addEventListener("mouseleave", function(){
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * It deletes tasks from the local storage that are older than today's date.
  */
 
 function deleteTaskPastDays(){
-
+console.log("deleteTaskPastDays");
     var taskArray = [];
     taskArray = JSON.parse(localStorage.getItem('tasks'));
     var newTaskArray = []

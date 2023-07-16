@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash, jsonify
 from datetime import timedelta
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 from werkzeug.utils import secure_filename
 import os
 import time
@@ -15,6 +16,20 @@ UPLOAD_FOLDER = 'C:\\Users\\nadav\\OneDrive\\Desktop\\DevOps22\\GIT\\TestWebsite
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # Specify the allowed file extensions
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER  # Set the upload folder configuration
+
+
+from flask import jsonify
+
+@app.route('/delete_task', methods=['DELETE'])
+def delete_task():
+    task_id = request.json['taskId']
+
+    try:
+        db.tasks.delete_one({'_id': ObjectId(task_id)})
+        return jsonify({'message': 'Task deleted successfully'})
+    except:
+        return jsonify({'message': 'Error deleting task'})
+
 
 class Task:
     def __init__(self, name, date, stime, ftime, category, comment=""):
@@ -49,7 +64,6 @@ def home():
     # Retrieve tasks from MongoDB
     collection = db['tasks']
     tasks = list(collection.find())
-
     return render_template('index.html', css_file='css/main.css')
 
 
@@ -91,7 +105,12 @@ def login():
 def tasks():
     if 'username' not in session:
         return render_template('login_required.html', css_file='css/main.css')
-    return render_template('tasks.html', css_file='main.css', delay=2.5)
+
+    # Retrieve tasks from MongoDB
+    tasks = db.tasks.find()
+
+    return render_template('tasks.html', tasks=tasks, css_file='main.css', delay=2.5)
+
 
 @app.route('/login_success')
 def login_success():
